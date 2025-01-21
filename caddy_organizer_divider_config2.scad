@@ -1,5 +1,4 @@
 use <caddy_organizer_divider.scad>
-use <caddy_organizer_divider_v2.scad>
 
 // longer, ~1/2 of the side pocket of the large aluminum bar handle caddy
 bottomWidth=70;

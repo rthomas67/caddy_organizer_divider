@@ -11,16 +11,6 @@ use <caddy_organizer_divider_common.scad>
 $fn=50;
 overlap=0.01;
 
-// test square sided more wide than long, thicker walls
-// evenly split dividers
-caddyOrganizerDivider(bottomThickness=5, wallThickness=3, 
-    bottomWidth=60, topWidth=60,
-    bottomLength=30, topLength=30,
-    wallHeight=20,
-    crosswaysDividerOffsets=[0,10,20], // rows
-    lengthwiseSplits=[[0,30],[0,20,40],[0]],  // row splits
-    pocketDepths=[[10,10],[-1,10,15],[-1]]);  // how deep each pocket is
-
 // TODO: implement overcut left and overcut right for each pocket
 // to overlap the sidewall.  Changing to cutting the pockets instead of
 // not cutting the walls may make it way easier to understand and maintain.
@@ -36,7 +26,7 @@ caddyOrganizerDivider(bottomThickness=5, wallThickness=3,
  * ALERT: The first element in each split array is expected to be 0
  *  meaning the corresponding pocketDepth is against the first side
  */
-// caddyOrganizerDivider(); // test defaults.
+caddyOrganizerDivider(); // test defaults.
 module caddyOrganizerDivider(bottomThickness=2, wallThickness=1, 
         bottomWidth=50, topWidth=65,
         bottomLength=75, topLength=90,
