@@ -15,7 +15,9 @@ module taperedBox(bw, tw, bl, tl, ht, centerWidthwise=true, centerLengthwise=tru
     extraLength = abs(tl-bl);
     widerWidth = max(tw,bw);
     longerLength = max(tl,bl);
-    // Don't shift if not centered or flipped.  When not centered and flipped, shift negative direction
+    // Don't shift if not centered and not flipped.
+    // When centered
+    // When not centered and flipped, shift negative direction
     topWidthShift = ((centerWidthwise) ? -(extraWidth/2) : ((flipWidthwise) ? -extraWidth : 0));
     topLengthShift = ((centerLengthwise) ? -(extraLength/2) : ((flipLengthwise) ? -extraLength : 0));
     echo(str("topWidthShift=",topWidthShift,", topLengthShift=",topLengthShift));
