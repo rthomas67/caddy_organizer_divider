@@ -132,11 +132,12 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
                 isFullWidthAndNotCentered = (isFirstSplit && isLastSplit) && !centerWidthwise;
                 // Do not flip when no inner splits and not centered
                 cutoutFlipWidthwise = isFirstSplit && !isFullWidthAndNotCentered;
+                centerSplitsWidthwise=(centerWidthwise && (isFirstSplit && isLastSplit)); // otherwise false
                 clipBottomHeight=((allFullDepth || pocketDepths[i][l] < 0) ? 0 : wallHeight-pocketDepths[i][l]);
                 translate([widthwiseOffset,lengthwiseOffset,bottomThickness])
                     taperedBox(bl=cutoutBl, bw=cutoutBw, tl=cutoutTl, tw=cutoutTw,
                         ht=wallHeight+overlap,
-                        centerWidthwise=false, centerLengthwise=false,
+                        centerWidthwise=centerSplitsWidthwise, centerLengthwise=false,
                         flipLengthwise=cutoutFlipLengthwise,
                         flipWidthwise=cutoutFlipWidthwise,
                         clipBottomHeight=clipBottomHeight
