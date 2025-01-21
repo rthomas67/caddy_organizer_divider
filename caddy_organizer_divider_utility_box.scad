@@ -7,9 +7,10 @@ topWidth=98;
 wallHeight=80;
 crosswaysDividerOffsets=[0,40,78,140,180];  // last one cuts the remainder to outerLength
 lengthwiseSplits=[
-    [24,72],[38,70],[40,80],[40],[30,60]]; // same count as divider offsets - relative to bottomWidth
+    [0,24,72],[0,38,70],[0,40,80],[0,40],[0,30,60]]; // same count as divider offsets - relative to bottomWidth
 bottomLength=230;
 topLength=238;
 
 caddyOrganizerDivider(bottomWidth=bottomWidth, topWidth=topWidth, bottomLength=bottomLength, 
-    topLength=topLength, wallHeight=wallHeight,crosswaysDividerOffsets=crosswaysDividerOffsets,lengthwiseSplits=lengthwiseSplits);
+    topLength=topLength, wallHeight=wallHeight,crosswaysDividerOffsets=crosswaysDividerOffsets,
+    lengthwiseSplits=lengthwiseSplits,allFullDepth=true);

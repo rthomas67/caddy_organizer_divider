@@ -45,7 +45,8 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
         lengthwiseSplits=[[0,25],[0,15,35]], // array of [offset,offset] for each cross section
         pocketDepths=[[5,10],[-1,5,15]],
         centerLengthwise=true,
-        centerWidthwise=true
+        centerWidthwise=true,
+        allFullDepth=false
         ) {
 
     // bottom
@@ -125,7 +126,7 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
 
                 cutoutFlipLengthwise = isFirstCrossSection;
                 cutoutFlipWidthwise = isFirstSplit;
-                clipBottomHeight=((pocketDepths[i][l] < 0) ? 0 : wallHeight-pocketDepths[i][l]);
+                clipBottomHeight=((allFullDepth || pocketDepths[i][l] < 0) ? 0 : wallHeight-pocketDepths[i][l]);
                 translate([widthwiseOffset,lengthwiseOffset,bottomThickness])
                     taperedBox(bl=cutoutBl, bw=cutoutBw, tl=cutoutTl, tw=cutoutTw,
                         ht=wallHeight+overlap,
