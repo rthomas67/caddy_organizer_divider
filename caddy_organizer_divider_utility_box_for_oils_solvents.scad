@@ -8,8 +8,10 @@ topLength=238;
 wallHeight=75;
 crosswaysDividerOffsets=[0,55,80,140,165];
 lengthwiseSplits=[
-    [8,48],[],[12,52],[],[]];
+    [0,8,48],[0],[0,12,52],[0],[0]];
 
 caddyOrganizerDivider(bottomWidth=bottomWidth, topWidth=topWidth, bottomLength=bottomLength, 
-    topLength=topLength, wallHeight=wallHeight,crosswaysDividerOffsets=crosswaysDividerOffsets,lengthwiseSplits=lengthwiseSplits);
+    centerLengthwise=false, centerWidthwise=false,
+    topLength=topLength, wallHeight=wallHeight,crosswaysDividerOffsets=crosswaysDividerOffsets,
+    lengthwiseSplits=lengthwiseSplits,allFullDepth=true);
 
