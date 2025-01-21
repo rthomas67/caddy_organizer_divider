@@ -90,8 +90,10 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
             // either 0 + outer wall thickness, or offsetPosition (center of wall) + 1/2 (inner) wall thickness
             lengthwiseOffset=crosswaysDividerOffsets[i]+((isFirstCrossSection) ? wallThickness : wallThickness/2);
             // at the ends calculate the extra length that will apply to the current cutout(s)
-            lengthwiseExtra=(isFirstCrossSection) ? startingInternalTopLengthwiseExtra :
-                (isLastCrossSection) ? endingInternalTopLengthwiseExtra : 0;
+            lengthwiseExtra=extraAmount(isFirstCrossSection, isLastCrossSection, startingInternalTopLengthwiseExtra,
+                    endingInternalTopLengthwiseExtra);
+            // lengthwiseExtra=(isFirstCrossSection) ? startingInternalTopLengthwiseExtra :
+            //     (isLastCrossSection) ? endingInternalTopLengthwiseExtra : 0;
             lengthwiseWallReduction = (isFirstCrossSection && isLastCrossSection) ? 
                     wallThickness * 2 : // no dividers (i.e. only the 0 divider), but both outer side walls
                     (isFirstCrossSection || isLastCrossSection) ? 
@@ -105,7 +107,7 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
                 isFirstSplit=(l==0);
                 isLastSplit=(l==(len(lengthwiseSplits[i])-1)); 
                 // either 0 + outer wall thickness, or offsetPosition (center of wall) + 1/2 (inner) wall thickness
-                widthwiseOffset=lengthwiseSplits[i][l] + ((isFirstSplit) ? wallThickness : wallThickness/2);
+                widthwiseOffset=(lengthwiseSplits[i][l] + ((isFirstSplit) ? wallThickness : wallThickness/2));
                 // outer segments reduce by 1/2 wall thickness
                 // inner segments reduce by 2 * 1/2 wall thicknesses (i.e. 1 whole)
                 widthwiseWallReduction = (isFirstSplit && isLastSplit) ? 
@@ -113,8 +115,10 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
                         (isFirstSplit || isLastSplit) ? 
                             wallThickness + wallThickness / 2 : // one outer side wall and 1/2 inner split wall
                             wallThickness; // 1/2 inner split wall, twice
-                widthwiseExtra = (isFirstSplit) ? startingInternalTopWidthwiseExtra :
-                    (isLastSplit) ? endingInternalTopWidthwiseExtra : 0;
+                widthwiseExtra = extraAmount(isFirstSplit, isLastSplit, startingInternalTopWidthwiseExtra,
+                        endingInternalTopWidthwiseExtra);
+                // widthwiseExtra = (isFirstSplit) ? startingInternalTopWidthwiseExtra :
+                //     (isLastSplit) ? endingInternalTopWidthwiseExtra : 0;
 
                 cutoutBl = ((isLastCrossSection) ? bottomLength : crosswaysDividerOffsets[i+1]) -
                         crosswaysDividerOffsets[i] - lengthwiseWallReduction;
@@ -125,7 +129,9 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
                 cutoutTw = cutoutBw + widthwiseExtra;
 
                 cutoutFlipLengthwise = isFirstCrossSection;
-                cutoutFlipWidthwise = isFirstSplit;
+                isFullWidthAndNotCentered = (isFirstSplit && isLastSplit) && !centerWidthwise;
+                // Do not flip when no inner splits and not centered
+                cutoutFlipWidthwise = isFirstSplit && !isFullWidthAndNotCentered;
                 clipBottomHeight=((allFullDepth || pocketDepths[i][l] < 0) ? 0 : wallHeight-pocketDepths[i][l]);
                 translate([widthwiseOffset,lengthwiseOffset,bottomThickness])
                     taperedBox(bl=cutoutBl, bw=cutoutBw, tl=cutoutTl, tw=cutoutTw,
@@ -139,6 +145,12 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
         } 
     }
 }
+
+function extraAmount(isFirst, isLast, startingExtraAmount, endingExtraAmount) = 
+    (isFirst && isLast) ? (startingExtraAmount + endingExtraAmount) : // all of it
+        extraAmountPart(isFirst, isLast, startingExtraAmount, endingExtraAmount); // just one part
+function extraAmountPart(isFirst, isLast, startingExtraAmount, endingExtraAmount) =
+    (isFirst) ? startingExtraAmount : ((isLast) ? endingExtraAmount : 0);
 
 /*
  * Alternative way to specify each row of dividers with array of
