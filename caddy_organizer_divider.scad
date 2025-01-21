@@ -17,9 +17,9 @@ caddyOrganizerDivider(bottomThickness=5, wallThickness=3,
     bottomWidth=60, topWidth=60,
     bottomLength=30, topLength=30,
     wallHeight=20,
-    crosswaysDividerOffsets=[0,15],
-    lengthwiseSplits=[[0,20],[0,20,40]],
-    pocketDepths=[[10,10],[0,5,15]]);
+    crosswaysDividerOffsets=[0,10,20], // rows
+    lengthwiseSplits=[[0,30],[0,20,40],[0]],  // row splits
+    pocketDepths=[[10,10],[-1,10,15],[-1]]);  // how deep each pocket is
 
 // TODO: implement overcut left and overcut right for each pocket
 // to overlap the sidewall.  Changing to cutting the pockets instead of
@@ -43,7 +43,7 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
         wallHeight=25,  // includes bottom thickness (REVIEW)
         crosswaysDividerOffsets=[0,30],
         lengthwiseSplits=[[0,25],[0,15,35]], // array of [offset,offset] for each cross section
-        pocketDepths=[[5,10],[0,5,15]],
+        pocketDepths=[[5,10],[-1,5,15]],
         centerLengthwise=true,
         centerWidthwise=true
         ) {
@@ -107,7 +107,7 @@ module caddyOrganizerDivider(bottomThickness=2, wallThickness=1,
                 widthwiseOffset=lengthwiseSplits[i][l] + ((isFirstSplit) ? wallThickness : wallThickness/2);
                 // outer segments reduce by 1/2 wall thickness
                 // inner segments reduce by 2 * 1/2 wall thicknesses (i.e. 1 whole)
-                widthwiseWallReduction = (isFirstSplit || isLastSplit) ? 
+                widthwiseWallReduction = (isFirstSplit && isLastSplit) ? 
                         wallThickness * 2 : // no splits, both outer walls
                         (isFirstSplit || isLastSplit) ? 
                             wallThickness + wallThickness / 2 : // one outer side wall and 1/2 inner split wall
